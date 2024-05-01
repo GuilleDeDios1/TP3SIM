@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 
 namespace WinFormsApp1
 {
@@ -52,7 +53,57 @@ namespace WinFormsApp1
 
 
             //EMPEZAMOS CON MONTECARLONCHO
+            List<float> listaAcumulada = new List<float>();
+            List<float> listaActual = new List<float>();
+            Random rnd = new Random();
+            for (int i = 1; i < cantidadSemanas; i++) {
+                //agrega reloj
+                listaActual.Add(float.Parse(i.ToString()));
+                //agrega random de demanda
+                listaActual.Add((float) Math.Round(rnd.NextDouble(),2));
+                //agrega el valor de la demanda
+                if (listaActual[listaActual.Count - 1] <= 0.5) { listaActual.Add(0f); }
+                else
+                {
+                    if (listaActual[listaActual.Count - 1] <= 0.65) { listaActual.Add(1f); }
+                    else
+                    {
+                        if (listaActual[listaActual.Count - 1] <= 0.9) { listaActual.Add(2f); }
+                        else
+                        {
+                            if (listaActual[listaActual.Count - 1] <= 0.99) { listaActual.Add(3f); }
+                        }
+                    }
+                }
 
+                //Agrega stock, si no es primer fila calcula
+                if (listaActual[0] == 1)
+                {
+                    listaActual.Add(stockIncial - listaActual[listaActual.Count - 1]);
+                }
+                else {
+                    listaActual.Add(listaAcumulada[3] - listaActual[listaActual.Count - 1]);
+                }
+
+
+
+
+
+
+                //agrega random de demora
+                listaActual.Add((float)Math.Round(rnd.NextDouble(), 2));
+                //agrega valor de la demora siempre y cuando la necesite
+                if (listaActual[listaActual.Count - 1] <= 0.3) { listaActual.Add(1f); }
+                else
+                {
+                    if (listaActual[listaActual.Count - 1] <= 0.7) { listaActual.Add(2f); }
+                    else
+                    {
+                        if (listaActual[listaActual.Count - 1] <= 0.99) { listaActual.Add(3f); } 
+                    }
+                }
+                
+            }
         }
     }
 }
