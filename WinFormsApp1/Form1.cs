@@ -56,22 +56,25 @@ namespace WinFormsApp1
             List<float> listaAcumulada = new List<float>();
             List<float> listaActual = new List<float>();
             Random rnd = new Random();
+            float StockOut = 0;
+            bool vanderaPedidoRealizado = false;
             for (int i = 1; i < cantidadSemanas; i++) {
+                
                 //agrega reloj
                 listaActual.Add(float.Parse(i.ToString()));
                 //agrega random de demanda
                 listaActual.Add((float) Math.Round(rnd.NextDouble(),2));
                 //agrega el valor de la demanda
-                if (listaActual[listaActual.Count - 1] <= 0.5) { listaActual.Add(0f); }
+                if (listaActual[listaActual.Count - 1] <= demanda0) { listaActual.Add(0f); }
                 else
                 {
-                    if (listaActual[listaActual.Count - 1] <= 0.65) { listaActual.Add(1f); }
+                    if (listaActual[listaActual.Count - 1] <= demanda1) { listaActual.Add(1f); }
                     else
                     {
-                        if (listaActual[listaActual.Count - 1] <= 0.9) { listaActual.Add(2f); }
+                        if (listaActual[listaActual.Count - 1] <= demanda2) { listaActual.Add(2f); }
                         else
                         {
-                            if (listaActual[listaActual.Count - 1] <= 0.99) { listaActual.Add(3f); }
+                            if (listaActual[listaActual.Count - 1] <= demanda3) { listaActual.Add(3f); }
                         }
                     }
                 }
@@ -82,26 +85,82 @@ namespace WinFormsApp1
                     listaActual.Add(stockIncial - listaActual[listaActual.Count - 1]);
                 }
                 else {
-                    listaActual.Add(listaAcumulada[3] - listaActual[listaActual.Count - 1]);
-                }
 
-
-
-
-
-
-                //agrega random de demora
-                listaActual.Add((float)Math.Round(rnd.NextDouble(), 2));
-                //agrega valor de la demora siempre y cuando la necesite
-                if (listaActual[listaActual.Count - 1] <= 0.3) { listaActual.Add(1f); }
-                else
-                {
-                    if (listaActual[listaActual.Count - 1] <= 0.7) { listaActual.Add(2f); }
+                    if (listaAcumulada[3] - listaActual[listaActual.Count - 1] < 0)
+                    {
+                        if (listaAcumulada[7] == listaActual[0])
+                        {
+                            listaActual.Add((listaAcumulada[3] + tamañoPedido) - listaActual[listaActual.Count - 1]);
+                        }
+                        else {
+                            listaActual.Add(0f);
+                            StockOut = listaAcumulada[3] - listaActual[listaActual.Count - 1] * -1 * costoStockOut;
+                        }
+                        
+                    }
                     else
                     {
-                        if (listaActual[listaActual.Count - 1] <= 0.99) { listaActual.Add(3f); } 
+                        if (listaAcumulada[7] == listaActual[0])
+                        {
+                            listaActual.Add((listaAcumulada[3] + tamañoPedido) - listaActual[listaActual.Count - 1]);
+                        }
+                        else {
+                            listaActual.Add(listaAcumulada[3] - listaActual[listaActual.Count - 1]);
+                        }
                     }
                 }
+                
+
+                //Verificamos si hay que pedir
+                if (listaActual[listaActual.Count - 1] <= puntoReposicion && vanderaPedidoRealizado)
+                {
+                    listaActual.Add(1f);
+                }
+                else
+                {
+                    listaActual.Add(0f);
+                }
+
+                //agrega random de demora
+                if (listaActual[listaActual.Count - 1] == 1) {
+                    listaActual.Add((float)Math.Round(rnd.NextDouble(), 2));
+                }
+                else
+                {
+                    listaActual.Add(0f);
+                }
+
+                
+                //agrega valor de la demora siempre y cuando la necesite
+                if (listaActual[listaActual.Count - 1] <= tiempoEntrega1) { listaActual.Add(1f); }
+                else
+                {
+                    if (listaActual[listaActual.Count - 1] <= tiempoEntrega2) { listaActual.Add(2f); }
+                    else
+                    {
+                        if (listaActual[listaActual.Count - 1] <= tiempoEntrega3) { listaActual.Add(3f); }
+                        else { listaActual.Add(0f); }
+                    }
+                }
+
+                //calculamos la llegada del pedido
+                if (vanderaPedidoRealizado)
+                {
+                    listaActual.Add(listaAcumulada[7]);
+                }
+                if (listaActual[listaActual.Count - 1] > 0)
+                {
+                    listaActual.Add(listaActual[0] + listaActual[listaActual.Count - 1]);
+                    vanderaPedidoRealizado = true;
+                }
+                else
+                {
+                    if (listaActual[listaActual.Count] != 0)
+                    {
+                        listaActual.Add(0f);
+                    }
+                }
+
                 
             }
         }
