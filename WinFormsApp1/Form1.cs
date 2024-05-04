@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Reflection;
 
@@ -53,116 +54,209 @@ namespace WinFormsApp1
 
 
             //EMPEZAMOS CON MONTECARLONCHO
-            List<float> listaAcumulada = new List<float>();
-            List<float> listaActual = new List<float>();
+            float [] listaAnterior = new float [16];
+            float [] listaActual = new float[16];
             Random rnd = new Random();
             float StockOut = 0;
             bool vanderaPedidoRealizado = false;
+            float[,] matrizMostrar = new float[cantidadSemanas, 16];
             for (int i = 1; i < cantidadSemanas; i++) {
-                
+
                 //agrega reloj
-                listaActual.Add(float.Parse(i.ToString()));
+                listaActual[0] = (float.Parse(i.ToString()));
                 //agrega random de demanda
-                listaActual.Add((float) Math.Round(rnd.NextDouble(),2));
+                listaActual[1] = ((float)Math.Round(rnd.NextDouble(), 2));
                 //agrega el valor de la demanda
-                if (listaActual[listaActual.Count - 1] <= demanda0) { listaActual.Add(0f); }
+                if (listaActual[listaActual.Length - 1] <= demanda0) { listaActual[2]=(0f); }
                 else
                 {
-                    if (listaActual[listaActual.Count - 1] <= demanda1) { listaActual.Add(1f); }
+                    if (listaActual[listaActual.Length - 1] <= demanda1 + demanda0) { listaActual[2] =(1f); }
                     else
                     {
-                        if (listaActual[listaActual.Count - 1] <= demanda2) { listaActual.Add(2f); }
+                        if (listaActual[listaActual.Length - 1] <= demanda2 + demanda1 + demanda0) { listaActual[2] = (2f); }
                         else
                         {
-                            if (listaActual[listaActual.Count - 1] <= demanda3) { listaActual.Add(3f); }
+                            if (listaActual[listaActual.Length - 1] <= demanda3 + demanda2 + demanda1 + demanda0) { listaActual[2] = (3f); }
                         }
+                    }
+                }
+
+                //agregamos random en dañada
+                if (i != 1 && listaActual[0] == listaAnterior[9])
+                {
+                    listaActual[3]=((float)Math.Round(rnd.NextDouble(), 2));
+                }
+                else {
+                    listaActual[3]=(0f);
+                }
+
+                //agregamos valor a dañada
+                if (listaActual[0] == 1) {
+                    listaActual[4] = (0f);
+                }
+                else {
+                    if (listaActual[0] == listaAnterior[9])
+                    {
+                        if (listaActual[3] < biciDañadaNo)
+                        {
+                            listaActual[4]=(0f);
+                        }
+                        else
+                        {
+                            listaActual[4]=(1f);
+                        }
+                    }
+                    else
+                    {
+                        listaActual[4] = (0f);
                     }
                 }
 
                 //Agrega stock, si no es primer fila calcula
                 if (listaActual[0] == 1)
                 {
-                    listaActual.Add(stockIncial - listaActual[listaActual.Count - 1]);
+                    listaActual[5] = (stockIncial - listaActual[2]);
                 }
                 else {
-
-                    if (listaAcumulada[3] - listaActual[listaActual.Count - 1] < 0)
+                    //Si queda negativo
+                    if (listaAnterior[5] - listaActual[2] < 0)
                     {
-                        if (listaAcumulada[7] == listaActual[0])
+                        //si queda negativo pero hay llegada de stock
+                        if (listaAnterior[9] == listaActual[0])
                         {
-                            listaActual.Add((listaAcumulada[3] + tamañoPedido) - listaActual[listaActual.Count - 1]);
+                            if (listaActual[4] == 1)
+                            {
+                                listaActual[5] = ((listaAnterior[5] + tamañoPedido) - listaActual[2] - 1);
+                                vanderaPedidoRealizado = false;
+                            }
+                            else {
+                                listaActual[5] = ((listaAnterior[5] + tamañoPedido) - listaActual[2]);
+                                vanderaPedidoRealizado = false;
+                            }
+
                         }
+                        //Si queda negativo
                         else {
-                            listaActual.Add(0f);
-                            StockOut = listaAcumulada[3] - listaActual[listaActual.Count - 1] * -1 * costoStockOut;
+                            listaActual[5]=(0f);
+                            StockOut = listaAnterior[5] - listaActual[2] * -1 * costoStockOut;
                         }
-                        
+
                     }
+                    //Queda positivo
                     else
                     {
-                        if (listaAcumulada[7] == listaActual[0])
+                        //Positivo pero hay llegada de stock
+                        if (listaAnterior[9] == listaActual[0])
                         {
-                            listaActual.Add((listaAcumulada[3] + tamañoPedido) - listaActual[listaActual.Count - 1]);
+                            if (listaActual[4] == 1f)
+                            {
+                                listaActual[5]=((listaAnterior[5] + tamañoPedido) - listaActual[2] - 1);
+                                vanderaPedidoRealizado = false;
+                            }
+                            else
+                            {
+                                listaActual[5]=((listaAnterior[5] + tamañoPedido) - listaActual[2]);
+                                vanderaPedidoRealizado = false;
+                            }
                         }
+                        //positivo
                         else {
-                            listaActual.Add(listaAcumulada[3] - listaActual[listaActual.Count - 1]);
+                            listaActual[5]=(listaAnterior[5] - listaActual[2]);
                         }
                     }
                 }
-                
+
 
                 //Verificamos si hay que pedir
-                if (listaActual[listaActual.Count - 1] <= puntoReposicion && vanderaPedidoRealizado)
+                if (listaActual[5] <= puntoReposicion && listaAnterior[9] == 0)
                 {
-                    listaActual.Add(1f);
+                    listaActual[6] = (1f);
                 }
                 else
                 {
-                    listaActual.Add(0f);
+                    listaActual[6] = (0f);
                 }
 
                 //agrega random de demora
-                if (listaActual[listaActual.Count - 1] == 1) {
-                    listaActual.Add((float)Math.Round(rnd.NextDouble(), 2));
+                if (listaActual[6] == 1f) {
+                    listaActual[7]=((float)Math.Round(rnd.NextDouble(), 2));
                 }
                 else
                 {
-                    listaActual.Add(0f);
+                    listaActual[7]=(0f);
                 }
 
-                
+
                 //agrega valor de la demora siempre y cuando la necesite
-                if (listaActual[listaActual.Count - 1] <= tiempoEntrega1) { listaActual.Add(1f); }
+                if (listaActual[listaActual.Length - 1] <= tiempoEntrega1 && listaActual[listaActual.Length - 1] != 0f) { listaActual[8]=(1f); }
                 else
                 {
-                    if (listaActual[listaActual.Count - 1] <= tiempoEntrega2) { listaActual.Add(2f); }
+                    if (listaActual[listaActual.Length - 1] <= tiempoEntrega2+ tiempoEntrega1 && listaActual[listaActual.Length - 1] != 0f) { listaActual[8] = (2f); }
                     else
                     {
-                        if (listaActual[listaActual.Count - 1] <= tiempoEntrega3) { listaActual.Add(3f); }
-                        else { listaActual.Add(0f); }
+                        if (listaActual[listaActual.Length - 1] <= tiempoEntrega3+ tiempoEntrega2 + tiempoEntrega1 && listaActual[listaActual.Length - 1] != 0f) { listaActual[8] = (3f); }
+                        else { listaActual[8]=(0f); }
                     }
                 }
-
-                //calculamos la llegada del pedido
-                if (vanderaPedidoRealizado)
-                {
-                    listaActual.Add(listaAcumulada[7]);
-                }
-                if (listaActual[listaActual.Count - 1] > 0)
-                {
-                    listaActual.Add(listaActual[0] + listaActual[listaActual.Count - 1]);
-                    vanderaPedidoRealizado = true;
-                }
-                else
-                {
-                    if (listaActual[listaActual.Count] != 0)
-                    {
-                        listaActual.Add(0f);
-                    }
-                }
-
                 
+                //calculamos la llegada del pedido
+                    if (vanderaPedidoRealizado)
+                    {
+                        listaActual[9]=(listaAnterior[9]);
+                    }
+                    if (listaActual[6] == 1)
+                    {
+                        listaActual[9]=(listaActual[0] + listaActual[8]);
+                        vanderaPedidoRealizado = true;
+                    }
+                    else
+                    {
+                        listaActual[9]=(0f);
+                    }
+
+                //calculamos KO
+                if (listaActual[6] == 1)
+                {
+                    listaActual[10]=(costoPedido);
+                }
+                else {
+                    listaActual[10]=(0f);
+                }
+
+                //calculamos KM
+                listaActual[11]=(listaActual[5]*costoMantenimieto);
+
+                //KS
+                listaActual[12]=(StockOut);
+
+                //agregamos costo total
+                listaActual[13]=(listaActual[10] + listaActual[11] + listaActual[12]);
+
+                //Agregamos costo acumulado
+                if (listaActual[0] == 1)
+                {
+                    listaActual[14]=(listaActual[13]);
+                }
+                else {
+                    listaActual[14]=(listaAnterior[14] + listaActual[13]);
+                }
+
+                //agregamos el costo promedio
+                listaActual[15]=(listaActual[14] / listaActual[0]);
+
+                listaAnterior = listaActual;
+                if (i <= hasta && i >= desde || i == cantidadSemanas)
+                {
+                    for (int j = 0; j < listaActual.Length; j++) // Cambiado de i a j
+                    {
+                        matrizMostrar[i, j] = listaActual[j]; // Usando i para indexar la fila correcta
+                    }
+                }
+                listaActual = new float[16];
             }
+            frmTablaResultados tablaResultados = new frmTablaResultados(matrizMostrar);
+            tablaResultados.ShowDialog();
+            
         }
     }
 }
