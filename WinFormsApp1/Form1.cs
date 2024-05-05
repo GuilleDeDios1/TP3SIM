@@ -22,6 +22,7 @@ namespace WinFormsApp1
         }
 
         private void montecarlo() {
+
             //datos de la simulacion
             int cantidadSemanas = int.Parse(txtNroSimulaciones.Text);
             int desde = int.Parse(txtIntDesde.Text);
@@ -43,12 +44,12 @@ namespace WinFormsApp1
             float costoPedido = float.Parse(txtCostoPedi.Text);
             float costoStockOut = float.Parse(txtCostoSO.Text);
 
-            //Bicicleta dañada
-            float biciDañadaNo = float.Parse(txtDañada0.Text);
-            float biciDañadaSi = float.Parse(txtDañada1.Text);
+            //Bicicleta daï¿½ada
+            float biciDaï¿½adaNo = float.Parse(txtDaï¿½ada0.Text);
+            float biciDaï¿½adaSi = float.Parse(txtDaï¿½ada1.Text);
 
             //Inventario
-            int tamañoPedido = int.Parse(txtTamPedi.Text);
+            int tamaï¿½oPedido = int.Parse(txtTamPedi.Text);
             int puntoReposicion = int.Parse(txtPuntoRepo.Text);
             int stockIncial = int.Parse(txtStockInicial.Text);
 
@@ -66,10 +67,10 @@ namespace WinFormsApp1
                 listaActual.Add(i);
 
 
-                // Generar un número aleatorio para la demanda de esta semana
+                // Generar un nï¿½mero aleatorio para la demanda de esta semana
                 float rndDemanda = (float)rnd.NextDouble();
 
-                // Calcular la demanda según el número aleatorio generado
+                // Calcular la demanda segï¿½n el nï¿½mero aleatorio generado
                 float demanda;
                 if (rndDemanda < demanda0)
                     demanda = 0f;
@@ -80,26 +81,26 @@ namespace WinFormsApp1
                 else
                     demanda = 3f;
 
-                // Agregar el número aleatorio de demanda y el valor de la demanda a la lista actual
+                // Agregar el nï¿½mero aleatorio de demanda y el valor de la demanda a la lista actual
                 listaActual.Add(rndDemanda);
                 listaActual.Add(demanda);
 
                 // Controlar si llega un pedido esta semana utilizando la lista anterior
-                if (i != 1 && listaAnterior[9] - listaActual[0] == 0) // Si es el día de llegada del pedido
+                if (i != 1 && listaAnterior[9] - listaActual[0] == 0) // Si es el dï¿½a de llegada del pedido
                 {
-                    // Generar un número aleatorio para determinar si llega una bicicleta dañada
-                    float rndDañada = (float)rnd.NextDouble();
-                    // Determinar si la bicicleta está dañada
-                    float bicicletaDañada = rndDañada > biciDañadaNo ? 1 : 0;
+                    // Generar un nï¿½mero aleatorio para determinar si llega una bicicleta daï¿½ada
+                    float rndDaï¿½ada = (float)rnd.NextDouble();
+                    // Determinar si la bicicleta estï¿½ daï¿½ada
+                    float bicicletaDaï¿½ada = rndDaï¿½ada > biciDaï¿½adaNo ? 1 : 0;
 
                     // Agregar el valor aleatorio de la demanda a la lista actual
-                    listaActual.Add(rndDañada);
-                    // Agregar si la bicicleta está dañada o no a la lista actual
-                    listaActual.Add(bicicletaDañada);
+                    listaActual.Add(rndDaï¿½ada);
+                    // Agregar si la bicicleta estï¿½ daï¿½ada o no a la lista actual
+                    listaActual.Add(bicicletaDaï¿½ada);
                 }
                 else
                 {
-                    // Si no es el día de llegada del pedido, agregar 0 en ambas columnas
+                    // Si no es el dï¿½a de llegada del pedido, agregar 0 en ambas columnas
                     listaActual.Add(0);
                     listaActual.Add(0);
                 }
@@ -115,11 +116,11 @@ namespace WinFormsApp1
                     {
                         if (listaActual[4] == 1)
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamañoPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamaï¿½oPedido - 1);
                         }
                         else
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamañoPedido);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamaï¿½oPedido);
                         }
                         bandera = false;
                     }
@@ -135,10 +136,10 @@ namespace WinFormsApp1
                     {
                         if (listaActual[4] == 1)
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamañoPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamaï¿½oPedido - 1);
                         }
                         else {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamañoPedido);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamaï¿½oPedido);
                         }
                         bandera = false;
                     }
@@ -163,7 +164,7 @@ namespace WinFormsApp1
                 if (listaActual[6] == 1) { listaActual.Add((float)rnd.NextDouble()); }
                 else { listaActual.Add(0f); }
 
-                // Controlar el valor de demora según el número aleatorio generado
+                // Controlar el valor de demora segï¿½n el nï¿½mero aleatorio generado
                 if (listaActual[6] == 1) {
                     if (listaActual[7] < tiempoEntrega1)
                     {
