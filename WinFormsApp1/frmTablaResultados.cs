@@ -13,9 +13,9 @@ namespace WinFormsApp1
 {
     public partial class frmTablaResultados : Form
     {
-        private List<float> matrizMostrar;
+        private List<List<float>> matrizMostrar;
 
-        public frmTablaResultados(List<float> matrizMostrar)
+        public frmTablaResultados(List<List<float>> matrizMostrar)
         {
             InitializeComponent();
             this.matrizMostrar = matrizMostrar;
@@ -23,12 +23,18 @@ namespace WinFormsApp1
 
         private void frmTablaResultados_Load(object sender, EventArgs e)
         {
-            DataGridViewRow row = new DataGridViewRow();
-            foreach (var item in matrizMostrar)
+            // Agregar filas al DataGridView
+            foreach (var fila in matrizMostrar)
             {
-                row.Cells.Add(new DataGridViewTextBoxCell { Value = item });
+                DataGridViewRow row = new DataGridViewRow();
+                // Agregar celdas a la fila
+                foreach (var valor in fila)
+                {
+                    row.Cells.Add(new DataGridViewTextBoxCell { Value = valor });
+                }
+                // Agregar la fila al DataGridView
+                mostrarMonteCarlo.Rows.Add(row);
             }
-            mostrarMonteCarlo.Rows.Add(row);
         }
     }
 }
