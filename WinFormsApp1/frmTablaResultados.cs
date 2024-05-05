@@ -24,6 +24,7 @@ namespace WinFormsApp1
         private void frmTablaResultados_Load(object sender, EventArgs e)
         {
             // Agregar filas al DataGridView
+            mostrarMonteCarlo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             foreach (var fila in matrizMostrar)
             {
                 DataGridViewRow row = new DataGridViewRow();

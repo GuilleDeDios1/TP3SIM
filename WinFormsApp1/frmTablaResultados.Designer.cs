@@ -71,7 +71,7 @@
             this.mostrarMonteCarlo.Location = new System.Drawing.Point(3, 3);
             this.mostrarMonteCarlo.Name = "mostrarMonteCarlo";
             this.mostrarMonteCarlo.RowTemplate.Height = 25;
-            this.mostrarMonteCarlo.Size = new System.Drawing.Size(1645, 446);
+            this.mostrarMonteCarlo.Size = new System.Drawing.Size(1645, 400);
             this.mostrarMonteCarlo.TabIndex = 0;
             // 
             // semana
@@ -173,7 +173,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1660, 450);
+            this.ClientSize = new System.Drawing.Size(1660, 416);
             this.Controls.Add(this.mostrarMonteCarlo);
             this.Name = "frmTablaResultados";
             this.Text = "frmTablaResultados";
