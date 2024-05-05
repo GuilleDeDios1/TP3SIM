@@ -90,7 +90,7 @@ namespace WinFormsApp1
                     // Generar un número aleatorio para determinar si llega una bicicleta dañada
                     float rndDañada = (float)rnd.NextDouble();
                     // Determinar si la bicicleta está dañada
-                    float bicicletaDañada = rndDañada < biciDañadaSi ? 0 : 1;
+                    float bicicletaDañada = rndDañada > biciDañadaNo ? 1 : 0;
 
                     // Agregar el valor aleatorio de la demanda a la lista actual
                     listaActual.Add(rndDañada);
