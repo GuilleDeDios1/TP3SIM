@@ -173,7 +173,7 @@
             this.txtDemd3.Name = "txtDemd3";
             this.txtDemd3.Size = new System.Drawing.Size(33, 23);
             this.txtDemd3.TabIndex = 9;
-            this.txtDemd3.Text = "0.1";
+            this.txtDemd3.Text = "0,1";
             // 
             // label8
             // 
@@ -199,7 +199,7 @@
             this.txtDemd2.Name = "txtDemd2";
             this.txtDemd2.Size = new System.Drawing.Size(33, 23);
             this.txtDemd2.TabIndex = 6;
-            this.txtDemd2.Text = "0.25";
+            this.txtDemd2.Text = "0,25";
             // 
             // txtDemd1
             // 
@@ -207,7 +207,7 @@
             this.txtDemd1.Name = "txtDemd1";
             this.txtDemd1.Size = new System.Drawing.Size(33, 23);
             this.txtDemd1.TabIndex = 5;
-            this.txtDemd1.Text = "0.15";
+            this.txtDemd1.Text = "0,15";
             // 
             // txtDemd0
             // 
@@ -215,7 +215,7 @@
             this.txtDemd0.Name = "txtDemd0";
             this.txtDemd0.Size = new System.Drawing.Size(33, 23);
             this.txtDemd0.TabIndex = 4;
-            this.txtDemd0.Text = "0.50";
+            this.txtDemd0.Text = "0,50";
             // 
             // label6
             // 
@@ -294,7 +294,7 @@
             this.txtTiempEntr3.Name = "txtTiempEntr3";
             this.txtTiempEntr3.Size = new System.Drawing.Size(30, 23);
             this.txtTiempEntr3.TabIndex = 6;
-            this.txtTiempEntr3.Text = "0.3";
+            this.txtTiempEntr3.Text = "0,3";
             // 
             // txtTiempEntr2
             // 
@@ -302,7 +302,7 @@
             this.txtTiempEntr2.Name = "txtTiempEntr2";
             this.txtTiempEntr2.Size = new System.Drawing.Size(30, 23);
             this.txtTiempEntr2.TabIndex = 5;
-            this.txtTiempEntr2.Text = "0.4";
+            this.txtTiempEntr2.Text = "0,4";
             // 
             // txtTiempEntr1
             // 
@@ -310,7 +310,7 @@
             this.txtTiempEntr1.Name = "txtTiempEntr1";
             this.txtTiempEntr1.Size = new System.Drawing.Size(30, 23);
             this.txtTiempEntr1.TabIndex = 4;
-            this.txtTiempEntr1.Text = "0.3";
+            this.txtTiempEntr1.Text = "0,3";
             // 
             // label12
             // 
@@ -378,7 +378,7 @@
             this.txtDañada1.Name = "txtDañada1";
             this.txtDañada1.Size = new System.Drawing.Size(33, 23);
             this.txtDañada1.TabIndex = 5;
-            this.txtDañada1.Text = "0.30";
+            this.txtDañada1.Text = "0,30";
             // 
             // txtDañada0
             // 
@@ -386,7 +386,7 @@
             this.txtDañada0.Name = "txtDañada0";
             this.txtDañada0.Size = new System.Drawing.Size(33, 23);
             this.txtDañada0.TabIndex = 4;
-            this.txtDañada0.Text = "0.70";
+            this.txtDañada0.Text = "0,70";
             // 
             // label17
             // 
