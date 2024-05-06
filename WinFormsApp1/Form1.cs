@@ -18,10 +18,14 @@ namespace WinFormsApp1
 
         private void btnGenerar_Click(object sender, EventArgs e)
         {
-            montecarlo();
+            if (Validar())
+            {
+                montecarlo();
+            };
         }
 
-        private void montecarlo() {
+        private void montecarlo()
+        {
 
             //datos de la simulacion
             int cantidadSemanas = int.Parse(txtNroSimulaciones.Text);
@@ -45,11 +49,11 @@ namespace WinFormsApp1
             float costoStockOut = float.Parse(txtCostoSO.Text);
 
             //Bicicleta da�ada
-            float biciDa�adaNo = float.Parse(txtDa�ada0.Text);
-            float biciDa�adaSi = float.Parse(txtDa�ada1.Text);
+            float biciDanadaNo = float.Parse(txtDanada0.Text);
+            float biciDanadaSi = float.Parse(txtDanada1.Text);
 
             //Inventario
-            int tama�oPedido = int.Parse(txtTamPedi.Text);
+            int tamanoPedido = int.Parse(txtTamPedi.Text);
             int puntoReposicion = int.Parse(txtPuntoRepo.Text);
             int stockIncial = int.Parse(txtStockInicial.Text);
 
@@ -62,13 +66,14 @@ namespace WinFormsApp1
             bool bandera = false;
             List<List<float>> tablaMostrar = new List<List<float>>();
 
-            for (int i = 1; i < cantidadSemanas; i++) {
+            for (int i = 1; i <= cantidadSemanas; i++)
+            {
                 //agrega semana
                 listaActual.Add(i);
 
 
                 // Generar un n�mero aleatorio para la demanda de esta semana
-                float rndDemanda = (float)rnd.NextDouble();
+                float rndDemanda = (float)Math.Round(rnd.NextDouble(), 2);
 
                 // Calcular la demanda seg�n el n�mero aleatorio generado
                 float demanda;
@@ -89,14 +94,14 @@ namespace WinFormsApp1
                 if (i != 1 && listaAnterior[9] - listaActual[0] == 0) // Si es el d�a de llegada del pedido
                 {
                     // Generar un n�mero aleatorio para determinar si llega una bicicleta da�ada
-                    float rndDa�ada = (float)rnd.NextDouble();
+                    float rndDanada = (float)Math.Round(rnd.NextDouble(), 2);
                     // Determinar si la bicicleta est� da�ada
-                    float bicicletaDa�ada = rndDa�ada > biciDa�adaNo ? 1 : 0;
+                    float bicicletaDanada = rndDanada > biciDanadaNo ? 1 : 0;
 
                     // Agregar el valor aleatorio de la demanda a la lista actual
-                    listaActual.Add(rndDa�ada);
+                    listaActual.Add(rndDanada);
                     // Agregar si la bicicleta est� da�ada o no a la lista actual
-                    listaActual.Add(bicicletaDa�ada);
+                    listaActual.Add(bicicletaDanada);
                 }
                 else
                 {
@@ -107,7 +112,8 @@ namespace WinFormsApp1
 
                 //control de stock
                 //si es mejor a 0
-                if (i == 1) {
+                if (i == 1)
+                {
                     listaActual.Add(stockIncial - listaActual[2]);
                 }
                 if (i != 1 && listaAnterior[5] - listaActual[2] < 0)
@@ -116,39 +122,44 @@ namespace WinFormsApp1
                     {
                         if (listaActual[4] == 1)
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tama�oPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1);
                         }
                         else
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tama�oPedido);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido);
                         }
                         bandera = false;
                     }
-                    else {
+                    else
+                    {
                         listaActual.Add(0f);
                         stockOut = (listaAnterior[5] - listaActual[2]) * -1 * costoStockOut;
 
                     }
                 }
-                else {
+                else
+                {
                     //si es mayor a 0 y llega la reposicion
                     if (i != 1 && listaAnterior[9] - listaActual[0] == 0)
                     {
                         if (listaActual[4] == 1)
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tama�oPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1);
                         }
-                        else {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tama�oPedido);
+                        else
+                        {
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido);
                         }
                         bandera = false;
                     }
-                    else {
-                        if (i != 1) {
+                    else
+                    {
+                        if (i != 1)
+                        {
                             listaActual.Add(listaAnterior[5] - listaActual[2]);
                         }
                     }
-                    
+
                 }
 
                 //Orden
@@ -156,7 +167,8 @@ namespace WinFormsApp1
                 {
                     listaActual.Add(1f);
                 }
-                else {
+                else
+                {
                     listaActual.Add(0f);
                 }
 
@@ -165,7 +177,8 @@ namespace WinFormsApp1
                 else { listaActual.Add(0f); }
 
                 // Controlar el valor de demora seg�n el n�mero aleatorio generado
-                if (listaActual[6] == 1) {
+                if (listaActual[6] == 1)
+                {
                     if (listaActual[7] < tiempoEntrega1)
                     {
                         listaActual.Add(1f);
@@ -186,7 +199,8 @@ namespace WinFormsApp1
                 {
                     listaActual.Add(listaAnterior[9]);
                 }
-                else {
+                else
+                {
                     if (listaActual[6] == 1 && bandera == false)
                     {
                         listaActual.Add(listaActual[0] + listaActual[8]);
@@ -200,7 +214,8 @@ namespace WinFormsApp1
                 {
                     listaActual.Add(costoPedido);
                 }
-                else {
+                else
+                {
                     listaActual.Add(0f);
                 }
 
@@ -219,7 +234,8 @@ namespace WinFormsApp1
                 {
                     listaActual.Add(listaAnterior[14] + listaActual[13]);
                 }
-                else {
+                else
+                {
                     listaActual.Add(listaActual[13]);
                 }
                 //costo promedio
@@ -228,15 +244,302 @@ namespace WinFormsApp1
                 listaAnterior = listaActual;
 
                 //llenamos la matriz
-                if (i >= desde && i < desde + hasta) {
+                if (i >= desde && i < desde + hasta + 1)
+                {
                     tablaMostrar.Add(listaActual);
                 }
-               
+
+                if (i == cantidadSemanas && desde+hasta< cantidadSemanas)
+                {
+                    tablaMostrar.Add(listaActual);
+                }
 
                 listaActual = new List<float>();
             }
             frmTablaResultados fr = new frmTablaResultados(tablaMostrar);
             fr.ShowDialog();
+        }
+
+        private Boolean Validar()
+        {
+            //datos de la simulacion
+            int cantidadSemanas = int.Parse(txtNroSimulaciones.Text);
+            int desde = int.Parse(txtIntDesde.Text);
+            int hasta = int.Parse(txtIntHasta.Text);
+
+            //demanda por semana
+            float demanda0 = float.Parse(txtDemd0.Text);
+            float demanda1 = float.Parse(txtDemd1.Text);
+            float demanda2 = float.Parse(txtDemd2.Text);
+            float demanda3 = float.Parse(txtDemd3.Text);
+            float demanda = demanda0 + demanda1 + demanda2 + demanda3;
+            
+            //Tiempo de entrega
+            float tiempoEntrega1 = float.Parse(txtTiempEntr1.Text);
+            float tiempoEntrega2 = float.Parse(txtTiempEntr2.Text);
+            float tiempoEntrega3 = float.Parse(txtTiempEntr3.Text);
+            float tiempoEntrega = tiempoEntrega1 + tiempoEntrega2 + tiempoEntrega3;
+
+            //Bicicleta da�ada
+            float biciDanadaNo = float.Parse(txtDanada0.Text);
+            float biciDanadaSi = float.Parse(txtDanada1.Text);
+            float biciDanada = biciDanadaSi + biciDanadaNo;
+
+            if (desde + hasta > cantidadSemanas)
+            {
+                MessageBox.Show("Controle el valor de cantidad de semanas a mostrar", "Error");
+                return false;
+            }
+            if (demanda != 1)
+            {
+                MessageBox.Show("La suma de las probabilidades de las demandas debe ser igual a 1", "Error");
+                return false;
+            }
+            if (tiempoEntrega != 1)
+            {
+                MessageBox.Show("La suma de las probabilidades de los tiempos de entrega debe ser igual a 1", "Error");
+                return false;
+            }
+            if (biciDanada != 1)
+            {
+                MessageBox.Show("La suma de las probabilidades de bici dañada debe ser igual a 1", "Error");
+                return false;
+            }
+            return true;
+        }
+
+        private void txtDemd0_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDemd1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDemd2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDemd3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtTiempEntr1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtTiempEntr2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtTiempEntr3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDanada0_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtDanada1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtTamPedi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtPuntoRepo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtStockInicial_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtNroSimulaciones_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtIntDesde_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtIntHasta_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCostoMant_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCostoPedi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtCostoSO_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números, coma y teclas de control como retroceso
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            // Permitir solo una coma
+            if ((e.KeyChar == ',') && ((sender as TextBox).Text.IndexOf(',') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
