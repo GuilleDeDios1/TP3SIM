@@ -28,159 +28,142 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mostrarMonteCarlo = new System.Windows.Forms.DataGridView();
-            this.semana = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rndDemanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.demanda = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rndDañada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dañada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orden = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rndDemora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.demora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.llegadaPedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ko = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.KM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costoTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costoAcumulado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costoPromedio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.mostrarMonteCarlo)).BeginInit();
-            this.SuspendLayout();
+            mostrarMonteCarlo = new DataGridView();
+            semana = new DataGridViewTextBoxColumn();
+            rndDemanda = new DataGridViewTextBoxColumn();
+            demanda = new DataGridViewTextBoxColumn();
+            rndDañada = new DataGridViewTextBoxColumn();
+            dañada = new DataGridViewTextBoxColumn();
+            stock = new DataGridViewTextBoxColumn();
+            orden = new DataGridViewTextBoxColumn();
+            rndDemora = new DataGridViewTextBoxColumn();
+            demora = new DataGridViewTextBoxColumn();
+            llegadaPedido = new DataGridViewTextBoxColumn();
+            ko = new DataGridViewTextBoxColumn();
+            KM = new DataGridViewTextBoxColumn();
+            ks = new DataGridViewTextBoxColumn();
+            costoTotal = new DataGridViewTextBoxColumn();
+            costoAcumulado = new DataGridViewTextBoxColumn();
+            costoPromedio = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)mostrarMonteCarlo).BeginInit();
+            SuspendLayout();
             // 
             // mostrarMonteCarlo
             // 
-            this.mostrarMonteCarlo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mostrarMonteCarlo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.semana,
-            this.rndDemanda,
-            this.demanda,
-            this.rndDañada,
-            this.dañada,
-            this.stock,
-            this.orden,
-            this.rndDemora,
-            this.demora,
-            this.llegadaPedido,
-            this.ko,
-            this.KM,
-            this.ks,
-            this.costoTotal,
-            this.costoAcumulado,
-            this.costoPromedio});
-            this.mostrarMonteCarlo.Location = new System.Drawing.Point(3, 3);
-            this.mostrarMonteCarlo.Name = "mostrarMonteCarlo";
-            this.mostrarMonteCarlo.RowTemplate.Height = 25;
-            this.mostrarMonteCarlo.Size = new System.Drawing.Size(1645, 400);
-            this.mostrarMonteCarlo.TabIndex = 0;
+            mostrarMonteCarlo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mostrarMonteCarlo.Columns.AddRange(new DataGridViewColumn[] { semana, rndDemanda, demanda, rndDañada, dañada, stock, orden, rndDemora, demora, llegadaPedido, ko, KM, ks, costoTotal, costoAcumulado, costoPromedio });
+            mostrarMonteCarlo.Location = new Point(3, 3);
+            mostrarMonteCarlo.Name = "mostrarMonteCarlo";
+            mostrarMonteCarlo.RowTemplate.Height = 25;
+            mostrarMonteCarlo.Size = new Size(1645, 400);
+            mostrarMonteCarlo.TabIndex = 0;
             // 
             // semana
             // 
-            this.semana.HeaderText = "Semana";
-            this.semana.Name = "semana";
-            this.semana.ReadOnly = true;
+            semana.HeaderText = "Semana";
+            semana.Name = "semana";
+            semana.ReadOnly = true;
             // 
             // rndDemanda
             // 
-            this.rndDemanda.HeaderText = "RndDemanda";
-            this.rndDemanda.Name = "rndDemanda";
-            this.rndDemanda.ReadOnly = true;
+            rndDemanda.HeaderText = "RndDemanda";
+            rndDemanda.Name = "rndDemanda";
+            rndDemanda.ReadOnly = true;
             // 
             // demanda
             // 
-            this.demanda.HeaderText = "Demanda";
-            this.demanda.Name = "demanda";
-            this.demanda.ReadOnly = true;
+            demanda.HeaderText = "Demanda";
+            demanda.Name = "demanda";
+            demanda.ReadOnly = true;
             // 
             // rndDañada
             // 
-            this.rndDañada.HeaderText = "RndDañada";
-            this.rndDañada.Name = "rndDañada";
+            rndDañada.HeaderText = "RndDañada";
+            rndDañada.Name = "rndDañada";
             // 
             // dañada
             // 
-            this.dañada.HeaderText = "Dañada";
-            this.dañada.Name = "dañada";
-            this.dañada.ReadOnly = true;
+            dañada.HeaderText = "Dañada";
+            dañada.Name = "dañada";
+            dañada.ReadOnly = true;
             // 
             // stock
             // 
-            this.stock.HeaderText = "Stock";
-            this.stock.Name = "stock";
-            this.stock.ReadOnly = true;
+            stock.HeaderText = "Stock";
+            stock.Name = "stock";
+            stock.ReadOnly = true;
             // 
             // orden
             // 
-            this.orden.HeaderText = "Orden";
-            this.orden.Name = "orden";
-            this.orden.ReadOnly = true;
+            orden.HeaderText = "Orden";
+            orden.Name = "orden";
+            orden.ReadOnly = true;
             // 
             // rndDemora
             // 
-            this.rndDemora.HeaderText = "RndDemora";
-            this.rndDemora.Name = "rndDemora";
-            this.rndDemora.ReadOnly = true;
+            rndDemora.HeaderText = "RndDemora";
+            rndDemora.Name = "rndDemora";
+            rndDemora.ReadOnly = true;
             // 
             // demora
             // 
-            this.demora.HeaderText = "Demora";
-            this.demora.Name = "demora";
-            this.demora.ReadOnly = true;
+            demora.HeaderText = "Demora";
+            demora.Name = "demora";
+            demora.ReadOnly = true;
             // 
             // llegadaPedido
             // 
-            this.llegadaPedido.HeaderText = "LlegadaPedido";
-            this.llegadaPedido.Name = "llegadaPedido";
-            this.llegadaPedido.ReadOnly = true;
+            llegadaPedido.HeaderText = "LlegadaPedido";
+            llegadaPedido.Name = "llegadaPedido";
+            llegadaPedido.ReadOnly = true;
             // 
             // ko
             // 
-            this.ko.HeaderText = "KO";
-            this.ko.Name = "ko";
-            this.ko.ReadOnly = true;
+            ko.HeaderText = "KO";
+            ko.Name = "ko";
+            ko.ReadOnly = true;
             // 
             // KM
             // 
-            this.KM.HeaderText = "KM";
-            this.KM.Name = "KM";
-            this.KM.ReadOnly = true;
+            KM.HeaderText = "KM";
+            KM.Name = "KM";
+            KM.ReadOnly = true;
             // 
             // ks
             // 
-            this.ks.HeaderText = "KS";
-            this.ks.Name = "ks";
-            this.ks.ReadOnly = true;
+            ks.HeaderText = "KS";
+            ks.Name = "ks";
+            ks.ReadOnly = true;
             // 
             // costoTotal
             // 
-            this.costoTotal.HeaderText = "Costo Total";
-            this.costoTotal.Name = "costoTotal";
-            this.costoTotal.ReadOnly = true;
+            costoTotal.HeaderText = "Costo Total";
+            costoTotal.Name = "costoTotal";
+            costoTotal.ReadOnly = true;
             // 
             // costoAcumulado
             // 
-            this.costoAcumulado.HeaderText = "CostoAcumulado";
-            this.costoAcumulado.Name = "costoAcumulado";
-            this.costoAcumulado.ReadOnly = true;
+            costoAcumulado.HeaderText = "CostoAcumulado";
+            costoAcumulado.Name = "costoAcumulado";
+            costoAcumulado.ReadOnly = true;
             // 
             // costoPromedio
             // 
-            this.costoPromedio.HeaderText = "CostoPromedio";
-            this.costoPromedio.Name = "costoPromedio";
-            this.costoPromedio.ReadOnly = true;
+            costoPromedio.HeaderText = "CostoPromedio";
+            costoPromedio.Name = "costoPromedio";
+            costoPromedio.ReadOnly = true;
             // 
             // frmTablaResultados
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1660, 416);
-            this.Controls.Add(this.mostrarMonteCarlo);
-            this.Name = "frmTablaResultados";
-            this.Text = "frmTablaResultados";
-            this.Load += new System.EventHandler(this.frmTablaResultados_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.mostrarMonteCarlo)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1370, 416);
+            Controls.Add(mostrarMonteCarlo);
+            Name = "frmTablaResultados";
+            Text = "frmTablaResultados";
+            Load += frmTablaResultados_Load;
+            ((System.ComponentModel.ISupportInitialize)mostrarMonteCarlo).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
