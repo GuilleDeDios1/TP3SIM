@@ -37,5 +37,10 @@ namespace WinFormsApp1
                 mostrarMonteCarlo.Rows.Add(row);
             }
         }
+
+        private void mostrarMonteCarlo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
