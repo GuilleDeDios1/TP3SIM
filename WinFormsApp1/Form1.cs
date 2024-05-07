@@ -262,6 +262,18 @@ namespace WinFormsApp1
 
         private Boolean Validar()
         {
+            if (txtNroSimulaciones.Text == "" || txtIntDesde.Text == ""
+                || txtIntHasta.Text == "" || txtDemd0.Text == "" || txtDemd1.Text == ""
+                || txtDemd2.Text == "" || txtDemd3.Text == "" || txtTiempEntr1.Text == ""
+                || txtTiempEntr2.Text == "" || txtTiempEntr3.Text == ""
+                || txtDanada0.Text == "" || txtDanada1.Text == "" || txtCostoMant.Text == ""
+                || txtCostoPedi.Text == "" || txtCostoSO.Text == "" || txtTamPedi.Text == ""
+                || txtPuntoRepo.Text == "" || txtStockInicial.Text =="")
+            {
+                MessageBox.Show("Debe rellenar todos los campos", "Error");
+                return false;
+            }
+
             //datos de la simulacion
             int cantidadSemanas = int.Parse(txtNroSimulaciones.Text);
             int desde = int.Parse(txtIntDesde.Text);
@@ -305,6 +317,7 @@ namespace WinFormsApp1
                 MessageBox.Show("La suma de las probabilidades de bici dañada debe ser igual a 1", "Error");
                 return false;
             }
+
             return true;
         }
 
