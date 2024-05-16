@@ -59,8 +59,8 @@ namespace WinFormsApp1
 
 
             //EMPEZAMOS CON MONTECARLONCHO
-            List<float> listaAnterior = new List<float>();
-            List<float> listaActual = new List<float>();
+            List<float> listaAnterior = new List<float>(); // Lista con la que comaramos y acumulamos. 
+            List<float> listaActual = new List<float>(); // Lista actual es con la que trabajamos.
             Random rnd = new Random();
             float stockOut = 0;
             bool bandera = false;
@@ -106,47 +106,44 @@ namespace WinFormsApp1
                 else
                 {
                     // Si no es el d�a de llegada del pedido, agregar 0 en ambas columnas
-                    listaActual.Add(0);
-                    listaActual.Add(0);
+                    listaActual.Add(0); // rndDanada   
+                    listaActual.Add(0); // Danada
                 }
 
                 //control de stock
-                //si es mejor a 0
-                if (i == 1)
+                if (i == 1) // para la primera semana.
                 {
-                    listaActual.Add(stockIncial - listaActual[2]);
+                    listaActual.Add(stockIncial - listaActual[2]); // stock inicial menos demanda.
                 }
-                if (i != 1 && listaAnterior[5] - listaActual[2] < 0)
+                if (i != 1 && listaAnterior[5] - listaActual[2] < 0) // Si stock de semana anterior - demanda actual < 0.
                 {
-                    if (listaAnterior[9] - listaActual[0] == 0)
+                    if (listaAnterior[9] - listaActual[0] == 0) // Si es semana correspondiente a la llegada del pedido. 
                     {
-                        if (listaActual[4] == 1)
+                        if (listaActual[4] == 1) // Si hay bici dañada.
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1); // stock de semana anterior - demanda actual + tamanoPedido - biciDanada.
                         }
                         else
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido); // stock de semana anterior - demanda actual + tamanoPedido.
                         }
                         bandera = false;
                     }
-                    else
+                    else // Lo que nos falto por el costo de stockOut.
                     {
-                        listaActual.Add(0f);
-                        stockOut = (listaAnterior[5] - listaActual[2]) * -1 * costoStockOut;
-
+                        listaActual.Add(0f); // Stock en 0.
+                        stockOut = (listaAnterior[5] - listaActual[2]) * -1 * costoStockOut; // Gasto de StockOut.
                     }
                 }
-                else
+                else // Si stock de semana anterior - demanda actual > 0.
                 {
-                    //si es mayor a 0 y llega la reposicion
-                    if (i != 1 && listaAnterior[9] - listaActual[0] == 0)
+                    if (i != 1 && listaAnterior[9] - listaActual[0] == 0) // Si es semana correspondiente a la llegada del pedido. 
                     {
-                        if (listaActual[4] == 1)
+                        if (listaActual[4] == 1) // Si hay dañada.
                         {
-                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1);
+                            listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido - 1); 
                         }
-                        else
+                        else // No hay dañada.
                         {
                             listaActual.Add((listaAnterior[5] - listaActual[2]) + tamanoPedido);
                         }
@@ -162,17 +159,17 @@ namespace WinFormsApp1
 
                 }
 
-                //Orden
-                if (i != 1 && listaActual[5] <= puntoReposicion && listaAnterior[9] == 0)
+                // Orden
+                if (i != 1 && listaActual[5] <= puntoReposicion && listaAnterior[9] == 0) // Si demanda <= puntoReposicion y no hay orden pendiente.
                 {
-                    listaActual.Add(1f);
+                    listaActual.Add(1f); // 1 para señalar que vamos a hacer pedido.
                 }
                 else
                 {
                     listaActual.Add(0f);
                 }
 
-                //AgregaDemora
+                //AgregaDemora si orden es igual a 1.
                 if (listaActual[6] == 1) { listaActual.Add((float)rnd.NextDouble()); }
                 else { listaActual.Add(0f); }
 
@@ -195,15 +192,15 @@ namespace WinFormsApp1
                 else { listaActual.Add(0f); }
 
                 //dia de llegada del pedido
-                if (bandera)
+                if (bandera) // si bandera es true es porque no llego el pedido. Entonces agrega la llegada de pedido de la anterior semana.
                 {
                     listaActual.Add(listaAnterior[9]);
                 }
-                else
+                else // No hay pedido.
                 {
                     if (listaActual[6] == 1 && bandera == false)
                     {
-                        listaActual.Add(listaActual[0] + listaActual[8]);
+                        listaActual.Add(listaActual[0] + listaActual[8]); // agrega llegada pedido.
                         bandera = true;
                     }
                     else { listaActual.Add(0f); }
@@ -240,16 +237,16 @@ namespace WinFormsApp1
                 }
                 //costo promedio
                 listaActual.Add(listaActual[14] / listaActual[0]);
-
+                
                 listaAnterior = listaActual;
 
-                //llenamos la matriz
+                //llenamos la matriz que vamos a mostrar.
                 if (i >= desde && i < desde + hasta + 1)
                 {
                     tablaMostrar.Add(listaActual);
                 }
 
-                if (i == cantidadSemanas && desde+hasta< cantidadSemanas)
+                if (i == cantidadSemanas && desde+hasta < cantidadSemanas) // agrega la ultima semana a la matriz.
                 {
                     tablaMostrar.Add(listaActual);
                 }
